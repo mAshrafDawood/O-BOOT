@@ -173,13 +173,13 @@ async function send_message() {
     eventSource.addEventListener( "stop", async function( event ) {
         eventSource.close();
 
-        if( new_chat ) {
-            let title_link = create_chat_link( chat_id );
+        // if( new_chat ) {
+        //     // let title_link = create_chat_link( chat_id );
 
-            create_title( question, response, title_link, chat_id );
+        //     // create_title( question, response, title_link, chat_id );
 
-            new_chat = false;
-        }
+        //     new_chat = false;
+        // }
 
         if( speech_enabled && paragraph.trim() !== "" ) {
             audio_queue.add( paragraph );
@@ -231,25 +231,25 @@ async function play_audio( audio ) {
  *
  * @returns Title link element
  */
-function create_chat_link() {
-    conversations_list.querySelector(".active")?.classList.remove("active");
+// function create_chat_link() {
+//     conversations_list.querySelector(".active")?.classList.remove("active");
 
-    let title_link = document.createElement( "li" );
-        title_link.classList.add( "active" );
+//     let title_link = document.createElement( "li" );
+//         title_link.classList.add( "active" );
 
-    title_link.insertAdjacentHTML("afterbegin", `
-        <button class="conversation-button" data-id="${chat_id}"><i class="fa fa-message fa-regular"></i> <span class="title-text">Untitled Chat</span></button>
-        <div class="fade"></div>
-        <div class="edit-buttons">
-            <button><i class="fa fa-edit"></i></button>
-            <button class="delete" data-id="${chat_id}"><i class="fa fa-trash"></i></button>
-        </div>
-    `);
+//     title_link.insertAdjacentHTML("afterbegin", `
+//         <button class="conversation-button" data-id="${chat_id}"><i class="fa fa-message fa-regular"></i> <span class="title-text">Untitled Chat</span></button>
+//         <div class="fade"></div>
+//         <div class="edit-buttons">
+//             <button><i class="fa fa-edit"></i></button>
+//             <button class="delete" data-id="${chat_id}"><i class="fa fa-trash"></i></button>
+//         </div>
+//     `);
 
-    conversations_list.prepend(title_link);
+//     conversations_list.prepend(title_link);
 
-    return title_link;
-}
+//     return title_link;
+// }
 
 /**
  * Adds a message to the message list

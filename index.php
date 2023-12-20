@@ -1,32 +1,33 @@
 <?php
-$settings = require( __DIR__ . "/settings.php" );
-require( __DIR__ . "/database.php" );
-require( __DIR__ . "/autoload.php" );
+$settings = require(__DIR__ . "/settings.php");
+require(__DIR__ . "/database.php");
+require(__DIR__ . "/autoload.php");
 
 $db = get_db();
-$conversation_class = get_conversation_class( $db );
+$conversation_class = get_conversation_class($db);
 
-$chat_id = intval( $_GET['chat_id'] ?? 0 );
+$chat_id = intval($_GET['chat_id'] ?? 0);
 
-$conversation = $conversation_class->find( $chat_id, $db );
+$conversation = $conversation_class->find($chat_id, $db);
 
-if( ! $conversation ) {
+if (!$conversation) {
     $chat_id = 0;
 }
 
-$new_chat = ! $chat_id;
+$new_chat = !$chat_id;
 
 $base_uri = $settings['base_uri'] ?? "";
 
-if( $base_uri != "" ) {
-    $base_uri = rtrim( $base_uri, "/" ) . "/";
+if ($base_uri != "") {
+    $base_uri = rtrim($base_uri, "/") . "/";
 }
 
-$speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enabled'];
+$speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enabled'];
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,11 +40,12 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
     <title>O-BOOT</title>
     <script>
         let base_uri = '<?php echo $base_uri; ?>';
-        let chat_id = <?php echo intval( $chat_id ); ?>;
+        let chat_id = <?php echo intval($chat_id); ?>;
         let new_chat = <?php echo $new_chat ? "true" : "false"; ?>;
         let speech_enabled = <?php echo $speech_enabled ? "true" : "false"; ?>;
     </script>
 </head>
+
 <body>
     <!-- <nav id="sidebar">
         <div class="float-top">
@@ -53,22 +55,22 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
             </div>
             <ul class="conversations">
                 <?php
-                $chats = $conversation_class->get_chats( $db );
+                $chats = $conversation_class->get_chats($db);
 
-                foreach( $chats as $chat ) {
+                foreach ($chats as $chat) {
                     $id = $chat->get_id();
-                    ?>
+                ?>
                     <li class="">
-                        <button class="conversation-button" data-id="<?php echo htmlspecialchars( $id ); ?>"><i class="fa fa-message fa-regular"></i> <span class="title-text"><?php echo htmlspecialchars( $chat->get_title() ); ?></span></button>
+                        <button class="conversation-button" data-id="<?php echo htmlspecialchars($id); ?>"><i class="fa fa-message fa-regular"></i> <span class="title-text"><?php echo htmlspecialchars($chat->get_title()); ?></span></button>
                         <div class="fade"></div>
                         <div class="edit-buttons">
                             <button><i class="fa fa-edit"></i></button>
-                            <button class="delete" data-id="<?php echo htmlspecialchars( $id ); ?>"><i class="fa fa-trash"></i></button>
+                            <button class="delete" data-id="<?php echo htmlspecialchars($id); ?>"><i class="fa fa-trash"></i></button>
                         </div>
                     </li>
                     <?php
                 }
-                ?>
+                    ?>
             </ul>
         </div>
         <div class="user-menu">
@@ -90,23 +92,24 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
             <div class="model-name">
                 أنا اوميديا البوت التفاعلي في أون باسيف
             </div>
-            <?php
-            $chat_history = $chat_id ? $conversation->get_messages( $chat_id, $db ) : [];
 
-            foreach( $chat_history as $chat_message ) {
-                if( $chat_message["role"] === "system" ) {  
+            <?php
+            $chat_history = $chat_id ? $conversation->get_messages($chat_id, $db) : [];
+
+            foreach ($chat_history as $chat_message) {
+                if ($chat_message["role"] === "system") {
                     continue;
                 }
-                $role = htmlspecialchars( $chat_message['role'] );
+                $role = htmlspecialchars($chat_message['role']);
 
-                if( $role === "assistant" ) {
+                if ($role === "assistant") {
                     $user_icon_class = "gpt";
                     $user_icon_letter = "G";
                 } else {
                     $user_icon_class = "";
                     $user_icon_letter = "U";
                 }
-                ?>
+            ?>
                 <div class="<?php echo $role; ?> message">
                     <div class="identity">
                         <i class="<?php echo $user_icon_class; ?> user-icon">
@@ -114,10 +117,10 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
                         </i>
                     </div>
                     <div class="content">
-                        <?php echo htmlspecialchars( $chat_message['content'] ); ?>
+                        <?php echo htmlspecialchars($chat_message['content']); ?>
                     </div>
                 </div>
-                <?php
+            <?php
             }
             ?>
         </div>
@@ -131,8 +134,8 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
                 (O-BOOT)
             </div>
 
-            <div>
-                <img src="" alt="bot-image">
+            <div class="image-container">
+                <img src="https://ai.omedia.ae/wp-content/uploads/أوميديا-للبوت-الجديد-جدا-.png" class="assistant-image">
             </div>
         </div>
 
@@ -149,4 +152,5 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
     <script src="<?php echo $base_uri; ?>assets/js/script.js"></script>
     <script src="<?php echo $base_uri; ?>assets/js/ui-script.js"></script>
 </body>
+
 </html>

@@ -571,6 +571,15 @@ pre code.hljs {
     font-size: 1.5em;
 }
 
+.image-container {
+    margin: auto;
+}
+
+.assistant-image{
+    height: 25%;
+}
+
+
 @keyframes blink {
     0% {
         opacity: 0;
