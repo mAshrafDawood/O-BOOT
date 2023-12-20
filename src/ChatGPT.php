@@ -16,7 +16,7 @@ class ChatGPT {
     protected $loadfunction = null;
     protected bool $loaded = false;
     protected $function_call = "auto";
-    protected string $model = "gpt-3.5-turbo";
+    protected string $model = "gpt-4";
     protected array $params = [];
 
     public function __construct(

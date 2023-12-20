@@ -194,18 +194,18 @@ async function create_text_to_speech( text ) {
     return new Promise( (resolve, _) => {
         const data = new FormData();
         data.append( "text", text );
-
         fetch( base_uri + "text_to_audio.php", {
             method: 'POST',
             body: data
         } ).then( response => {
+            console.log(response);
             return response.json();
         } ).then( data => {
+            console.log(data);
             if( data.status !== "OK" ) {
                 console.log( new Error( "Unable to create audio" ) );
                 return;
             }
-
             var audio = new Audio();
             audio.src = base_uri + "speech/output/" + data.response;
 

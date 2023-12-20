@@ -5,3 +5,5 @@ settings.php
 chatwtf.db
 speech/output/*.wav
 speech/input/*.txt
+venv
+

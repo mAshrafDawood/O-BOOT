@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from elevenlabs import set_api_key, save, generate
+from elevenlabs import set_api_key, save, generate, voices
 import sys
 import os
 
@@ -30,9 +30,14 @@ set_api_key(elevenlabs_api_key)
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 
-with open(input_file, "r") as f:
+with open(input_file, "r", encoding="utf-8") as f:
     input_text = f.read()
 
-audio = generate(input_text)
+
+audio = generate(
+    text=input_text,
+    voice="hQJTSSKVuenJ9kF2jvHb",
+    model="eleven_multilingual_v2"
+)
 
 save(audio, output_file)

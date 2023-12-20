@@ -28,7 +28,7 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo $base_uri; ?>assets/css/style.css" type="text/css" />
@@ -36,7 +36,7 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>ChatWTF</title>
+    <title>O-BOOT</title>
     <script>
         let base_uri = '<?php echo $base_uri; ?>';
         let chat_id = <?php echo intval( $chat_id ); ?>;
@@ -88,13 +88,13 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
     <main>
         <div class="view conversation-view <?php echo $chat_id ? "show" : ""; ?>" id="chat-messages">
             <div class="model-name">
-                <i class="fa fa-bolt"></i> Default (GPT-3.5)
+                أنا اوميديا البوت التفاعلي في أون باسيف
             </div>
             <?php
             $chat_history = $chat_id ? $conversation->get_messages( $chat_id, $db ) : [];
 
             foreach( $chat_history as $chat_message ) {
-                if( $chat_message["role"] === "system" ) {
+                if( $chat_message["role"] === "system" ) {  
                     continue;
                 }
                 $role = htmlspecialchars( $chat_message['role'] );
@@ -122,31 +122,13 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
             ?>
         </div>
         <div class="view new-chat-view <?php echo $chat_id ? "" : "show"; ?>">
-            <div class="model-selector" onclick="alert('Model selector not implemented yet :(');">
-                <button class="gpt-3 selected">
-                    <i class="fa fa-bolt"></i> GPT-3.5
-                    <div class="model-info">
-                        <div class="model-info-box">
-                            <p>Our fastest model, great for most every day tasks.</p>
-
-                            <p class="secondary">Available to Free and Plus users</p>
-                        </div>
-                    </div>
-                </button>
-                <button class="gpt-4">
-                    <i class="fa fa-wand-magic-sparkles"></i> GPT-4
-                    <div class="model-info">
-                        <div class="model-info-box">
-                            <p>Our most capable model, great for creative stuff.</p>
-
-                            <p class="secondary">Available for Plus users.</p>
-                        </div>
-                    </div>
-                </button>
-            </div>
 
             <div class="logo">
-                ChatWTF
+                OnPassive
+            </div>
+
+            <div class="logo o-boot">
+                (O-BOOT)
             </div>
         </div>
 
@@ -155,7 +137,9 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
                 <textarea id="message" rows="1" placeholder="Send a message"></textarea>
                 <button id="send-button"><i class="fa fa-paper-plane"></i></button>
             </div>
-            <div class="disclaimer">ChatWTF uses the OpenAI ChatGPT API but is not affiliated with OpenAI</div>
+            <div class="disclaimer">
+                مشغل بواسطة OI-Media
+            </div>
         </div>
     </main>
     <script src="<?php echo $base_uri; ?>assets/js/script.js"></script>

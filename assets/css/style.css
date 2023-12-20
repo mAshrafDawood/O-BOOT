@@ -488,6 +488,7 @@ p.secondary {
     margin-top: 12px;
     color: var(--color-disclaimer);
     font-size: 0.7em;
+    direction: rtl;
 }
 
 #send-button {
@@ -564,6 +565,10 @@ pre code.hljs {
     background-color: #fff;
     display: inline-block;
     animation: blink 1s infinite;
+}
+
+.o-boot{
+    font-size: 1.5em;
 }
 
 @keyframes blink {
