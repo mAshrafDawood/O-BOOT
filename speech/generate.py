@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from elevenlabs import set_api_key, save, generate, voices
+from elevenlabs import set_api_key, save, generate, Voice, VoiceSettings
 import sys
 import os
 
@@ -36,7 +36,15 @@ with open(input_file, "r", encoding="utf-8") as f:
 
 audio = generate(
     text=input_text,
-    voice="hQJTSSKVuenJ9kF2jvHb",
+    voice=Voice(
+        voice_id="4bdFzwon1oxlWoFz4Dck",
+        settings=VoiceSettings(
+            stability=0.35,
+            similarity_boost=1,
+            style=0.13,
+            use_speaker_boost=True
+        )
+    ),
     model="eleven_multilingual_v2"
 )
 

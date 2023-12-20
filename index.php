@@ -45,7 +45,7 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
     </script>
 </head>
 <body>
-    <nav id="sidebar">
+    <!-- <nav id="sidebar">
         <div class="float-top">
             <div class="sidebar-controls">
                 <button class="new-chat"><i class="fa fa-plus"></i> New chat</button>
@@ -84,7 +84,7 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
                 <li><button>Log out</button></li>
             </ul>
         </div>
-    </nav>
+    </nav> -->
     <main>
         <div class="view conversation-view <?php echo $chat_id ? "show" : ""; ?>" id="chat-messages">
             <div class="model-name">
@@ -129,6 +129,10 @@ $speech_enabled = isset( $settings['speech_enabled'] ) && $settings['speech_enab
 
             <div class="logo o-boot">
                 (O-BOOT)
+            </div>
+
+            <div>
+                <img src="" alt="bot-image">
             </div>
         </div>
 

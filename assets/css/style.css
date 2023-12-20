@@ -7,7 +7,7 @@ html, body {
 
 :root {
     --color-white: #fff;
-    --color-main: #2c2d30;
+    --color-main: #0a1949;
     --color-main-fade: #2c2d3000;
     --color-secondary: #171717;
     --color-secondary-fade: #17171700;
@@ -17,14 +17,14 @@ html, body {
     --color-groupings: #9ca6b5;
     --color-gpt-icon: #000000;
     --color-black: #1e1e1f;
-    --color-user-menu-hover: #383b42;
+    --color-user-menu-hover: #253967;
     --color-text: #f5f9ff;
-    --color-gpt3: #5fc319;
+    --color-gpt3: #521010;
     --color-gpt4: #f22626;
     --color-secondary-p: #c9ccd1;
     --color-logo: #848484;
     --color-model-name: #ffffff;
-    --color-assistant-bg: #3f4042;
+    --color-assistant-bg: #536fa7;
     --color-assistant-text: #e1e6ed;
     --color-disclaimer: #d0d2e1;
     --color-border1: #484a4e;
