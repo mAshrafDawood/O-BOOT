@@ -127,7 +127,7 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
         <div class="view new-chat-view <?php echo $chat_id ? "" : "show"; ?>">
 
             <div class="logo">
-                OnPassive
+                ONPASSIVE
             </div>
 
             <div class="logo o-boot">
@@ -143,6 +143,10 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
             <div class="message-wrapper">
                 <textarea id="message" rows="1" placeholder="Send a message"></textarea>
                 <button id="send-button"><i class="fa fa-paper-plane"></i></button>
+            </div>
+            <div class="record-container">
+                <button id="recordButton"><i class="fa-solid fa-microphone"></i>Start Recording</button>
+                <button id="stopButton"><i class="fa-solid fa-microphone-slash"></i>Stop Recording</button>
             </div>
             <div class="disclaimer">
                 مشغل بواسطة OI-Media

@@ -68,14 +68,32 @@ function scrolled_to_bottom() {
     return ( Math.ceil( message_list.scrollTop ) + message_list.offsetHeight ) >= message_list.scrollHeight;
 }
 
+let audio_map = new Map();
+let next_id = 1;
 class AudioQueue {
     queue = [];
     handling = false;
 
-    async add( text ) {
+    async add( text, id ) {
         const audio = await create_text_to_speech( text );
         this.queue.push( audio );
+        audio_map[id] = audio;
         if( this.queue.length === 1 ) {
+            await this.handle();
+        }
+    }
+
+    async add_audio( audio, id ) {
+        this.queue.push(audio);
+        audio_map[id] = audio;
+        if (this.queue.length == 1) {
+            await this.handle();
+        }
+    }
+
+    async play_audio( id ) {
+        this.queue.push(audio_map[id]);
+        if (this.queue.length == 1) {
             await this.handle();
         }
     }
@@ -99,17 +117,19 @@ class AudioQueue {
     }
 }
 
+const audio_queue = new AudioQueue();
+
 /**
  * Sends a message to ChatGPT and appends the
  * message and the response to the chat
  */
 async function send_message() {
-    show_view( ".conversation-view" );
+    next_id++;
 
     let question = message_input.value;
 
     // intialize message with blinking cursor
-    let message = add_message( "assistant", '<div id="cursor"></div>' );
+    let message = add_message( "assistant", '<div id="cursor"></div>', next_id );
 
     // empty the message input field
     message_input.value = "";
@@ -141,7 +161,6 @@ async function send_message() {
     let response = "";
 
     // initialize audio handling
-    const audio_queue = new AudioQueue();
     let paragraph = "";
 
     // when a new token arrives
@@ -154,7 +173,7 @@ async function send_message() {
 
         if( paragraph.indexOf( "\n\n" ) !== -1 ) {
             if( speech_enabled && paragraph.trim() !== "" ) {
-                audio_queue.add( paragraph );
+                audio_queue.add( paragraph, next_id);
             }
 
             paragraph = "";
@@ -182,7 +201,7 @@ async function send_message() {
         // }
 
         if( speech_enabled && paragraph.trim() !== "" ) {
-            audio_queue.add( paragraph );
+            audio_queue.add( paragraph, next_id );
             paragraph = "";
         }
     } );
@@ -217,12 +236,13 @@ async function create_text_to_speech( text ) {
 }
 
 async function play_audio( audio ) {
-   return new Promise( (resolve, _) => {
-        audio.addEventListener( 'ended', () => {
-            resolve();
+    if (!audio) return;
+    return new Promise( (resolve, _) => {
+            audio.addEventListener( 'ended', () => {
+                resolve();
+            } );
+            audio.play();
         } );
-        audio.play();
-    } );
 }
 
 /**
@@ -258,7 +278,7 @@ async function play_audio( audio ) {
  * @param {string} message The message to add
  * @returns The added message element
  */
-function add_message( role, message ) {
+function add_message( role, message, id=-1, type="text" ) {
     const message_item = document.createElement("div");
     message_item.classList.add(role);
     message_item.classList.add("message");
@@ -268,9 +288,13 @@ function add_message( role, message ) {
     if( role === "assistant" ) {
         user_icon_letter = "G";
         user_icon_class = "gpt";
+
     }
 
-    message_item.insertAdjacentHTML("beforeend", `
+    
+
+    if (type == "text") {
+        message_item.insertAdjacentHTML("beforeend", `
         <div class="identity">
             <i class="${user_icon_class} user-icon">
                 ${user_icon_letter}
@@ -280,6 +304,20 @@ function add_message( role, message ) {
             ${message}
         </div>
     `);
+    } else {
+        message_item.insertAdjacentHTML("beforeend", `
+        <div class="identity">
+            <i class="${user_icon_class} user-icon">
+                ${user_icon_letter}
+            </i>
+        </div>
+        `);
+        const contentElement = document.createElement('div');
+        contentElement.classList = "content";
+        contentElement.appendChild(message);
+        message_item.appendChild(contentElement);
+        console.log(message_item.innerHTML);
+    }
 
     message_list.appendChild(message_item);
 
@@ -291,6 +329,25 @@ function add_message( role, message ) {
     // scroll down the message list
     message_list.scrollTop = message_list.scrollHeight;
 
+    message_list.querySelectorAll('.assistant').forEach( (el) => {
+        const playback_icon = el.children[0].children[0];
+        el.addEventListener("mouseenter", () => {
+            playback_icon.classList = "fa-play fa-solid";
+            playback_icon.innerHTML = "";
+        });
+
+        el.addEventListener("mouseleave", () => {
+            playback_icon.classList = "gpt user-icon";
+            playback_icon.innerHTML = "G";
+        });
+
+        el.addEventListener("click", () => {
+            audio_queue.play_audio(id);
+        } );
+    } );
+
+
+    show_view( ".conversation-view" );
     return message_item;
 }
 
@@ -453,4 +510,68 @@ function delete_button_action( button ) {
         body: data
     } );
     button.parentNode.parentNode.remove();
+}
+
+var mediaRecorder;
+var recordedChunks = [];
+const startRecordButton = document.getElementById('recordButton');
+const stopRecordButton = document.getElementById('stopButton');
+
+startRecordButton.addEventListener('click', function() {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+        .then(stream => {
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.start(100);
+
+            mediaRecorder.addEventListener('dataavailable', function(e) {
+                recordedChunks.push(e.data);
+            });
+        })
+        .catch(console.error);
+});
+
+stopRecordButton.addEventListener('click', function() {
+    mediaRecorder.stop();
+
+    next_id++;
+
+    // Prepare the recorded data to be sent to your API
+    let blob = new Blob(recordedChunks, {
+        type: 'audio/webm'
+    });
+
+    // Create an ObjectURL from the Blob
+    let url = URL.createObjectURL(blob);
+
+    // Create a new audio element
+    let audioElement = document.createElement('audio');
+    audioElement.controls = true;
+    audioElement.src = url;
+
+    add_message( "user", audioElement, next_id, "audio" );
+    
+    recordedChunks = [];
+
+    add_audio(blob);
+    
+    console.log(blob);
+});
+
+async function add_audio(blob) {
+    let data = new FormData();
+    data.append( "file", blob );
+
+    chat_id = await fetch( base_uri + "audio_to_text.php", {
+        method: "POST",
+        body: data
+    } ).then( (response) => {
+        console.log(response);
+        return response.json();
+    } ).then( (data) => {
+        message_input.value = data['response'];
+        add_message("user", message_input);
+        send_message();
+    });
+
+
 }

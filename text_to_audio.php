@@ -7,12 +7,12 @@ error_reporting(E_ALL);
 
 header( "Content-Type: application/json; charset=utf-8" );
 
-$speech_dir = __DIR__ . "\\speech";
-$input_dir = $speech_dir . "\\input";
-$output_dir = $speech_dir . "\\output";
+$speech_dir = __DIR__ . "/speech";
+$input_dir = $speech_dir . "/input";
+$output_dir = $speech_dir . "/output";
 
 // clean out old output files
-$old_output = glob( $speech_dir . "\\output\\*.wav" );
+$old_output = glob( $speech_dir . "/output/*.wav" );
 foreach( $old_output as $file ) {
     if( filemtime( $file ) < time() - 60 * 5 ) {
         @unlink( $file );
@@ -50,8 +50,8 @@ if( ! file_exists( $output_dir ) ) {
 
 $id = uniqid( more_entropy: true );
 
-$input_file = $input_dir . "\\" . $id . ".txt";
-$output_file = $output_dir . "\\" . $id . ".wav";
+$input_file = $input_dir . "/" . $id . ".txt";
+$output_file = $output_dir . "/" . $id . ".wav";
 
 // $text = mb_convert_encoding($text, "UTF-8");
 $write = file_put_contents( $input_file, trim( $text ) );
@@ -63,9 +63,9 @@ if( $write === false ) {
     ] ) );
 }
 
-$speech_script = $speech_dir . "/generate.py";
+$speech_script = $speech_dir . "/generate_audio.py";
 
-$python_path = __DIR__ . "\\venv\\Scripts\\python";
+$python_path = __DIR__ . "/venv/Scripts/python";
 
 exec( $python_path . " " . escapeshellarg( $speech_script ) . " " . escapeshellarg( $input_file ) . " " . escapeshellarg( $output_file ) . " " . escapeshellarg( $settings['elevenlabs_api_key'] ), $output, $result_code );
 
