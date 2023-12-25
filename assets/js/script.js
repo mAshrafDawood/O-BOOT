@@ -217,10 +217,8 @@ async function create_text_to_speech( text ) {
             method: 'POST',
             body: data
         } ).then( response => {
-            console.log(response);
             return response.json();
         } ).then( data => {
-            console.log(data);
             if( data.status !== "OK" ) {
                 console.log( new Error( "Unable to create audio" ) );
                 return;
@@ -316,7 +314,6 @@ function add_message( role, message, id=-1, type="text" ) {
         contentElement.classList = "content";
         contentElement.appendChild(message);
         message_item.appendChild(contentElement);
-        console.log(message_item.innerHTML);
     }
 
     message_list.appendChild(message_item);
@@ -553,23 +550,20 @@ stopRecordButton.addEventListener('click', function() {
     recordedChunks = [];
 
     add_audio(blob);
-    
-    console.log(blob);
 });
 
 async function add_audio(blob) {
     let data = new FormData();
-    data.append( "file", blob );
+    data.append( "blob", blob );
 
     chat_id = await fetch( base_uri + "audio_to_text.php", {
         method: "POST",
         body: data
     } ).then( (response) => {
-        console.log(response);
         return response.json();
     } ).then( (data) => {
-        message_input.value = data['response'];
-        add_message("user", message_input);
+        console.log(data);
+        add_message("user", data['text']);
         send_message();
     });
 

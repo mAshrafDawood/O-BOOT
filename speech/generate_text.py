@@ -15,18 +15,20 @@ if len(sys.argv) < 3:
     print_usage()
 
 if len(sys.argv) < 4:
-    elevenlabs_api_key = os.getenv("OPENAI_API_KEY")
+    openai_api_key = os.getenv("OPENAI_API_KEY")
 else:
-    elevenlabs_api_key = sys.argv[3]
+    openai_api_key = sys.argv[3]
 
-if not elevenlabs_api_key:
+if not openai_api_key:
     print("ERROR: No API key provided")
     print_usage()
 
 input_file = sys.argv[1]
 output_file = sys.argv[2]
 
-client = openai.OpenAI()
+client = openai.OpenAI(
+    api_key=openai_api_key
+    )
 
 # Call OpenAI Whisper API to transcribe the audio file
 # (Replace this with actual Whisper API call)
@@ -35,6 +37,7 @@ response = client.audio.transcriptions.create(
     file=Path(input_file)
 )
 
-with open(output_file, 'r', encoding='utf-8') as f:
-    f.write(response)
-print(response)
+with open(output_file, 'w', encoding='utf-8') as f:
+    f.write(response.text)
+
+print(response.text)

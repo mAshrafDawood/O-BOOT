@@ -38,12 +38,12 @@ audio = generate(
     text=input_text,
     voice=Voice(
         voice_id="ipTIeZxLDCu8TKssiYoG",
-        settings=VoiceSettings(
-            stability=0.35,
-            similarity_boost=1,
-            style=0.13,
-            use_speaker_boost=True
-        )
+        # settings=VoiceSettings(
+        #     stability=0.35,
+        #     similarity_boost=1,
+        #     style=0.13,
+        #     use_speaker_boost=True
+        # )
     ),
     model="eleven_multilingual_v2"
 )
