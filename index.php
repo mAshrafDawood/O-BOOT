@@ -134,9 +134,9 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
                 (O-BOOT)
             </div>
 
-            <div class="image-container">
+            <!-- <div class="image-container">
                 <img src="https://ai.omedia.ae/wp-content/uploads/أوميديا-للبوت-الجديد-جدا-.png" class="assistant-image">
-            </div>
+            </div> -->
         </div>
 
         <div id="message-form">
