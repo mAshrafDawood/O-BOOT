@@ -281,20 +281,17 @@ function add_message( role, message, id=-1, type="text" ) {
     message_item.classList.add(role);
     message_item.classList.add("message");
 
-    let user_icon_class = "";
+    let user_icon_class = "user-icon";
     let user_icon_letter = "U";
     if( role === "assistant" ) {
-        user_icon_letter = "G";
-        user_icon_class = "gpt";
-
+        user_icon_letter = "";
+        user_icon_class = "fa-play fa-solid";
     }
-
-    
 
     if (type == "text") {
         message_item.insertAdjacentHTML("beforeend", `
         <div class="identity">
-            <i class="${user_icon_class} user-icon">
+            <i class="${user_icon_class}">
                 ${user_icon_letter}
             </i>
         </div>
@@ -305,7 +302,7 @@ function add_message( role, message, id=-1, type="text" ) {
     } else {
         message_item.insertAdjacentHTML("beforeend", `
         <div class="identity">
-            <i class="${user_icon_class} user-icon">
+            <i class="${user_icon_class}">
                 ${user_icon_letter}
             </i>
         </div>
@@ -328,15 +325,6 @@ function add_message( role, message, id=-1, type="text" ) {
 
     message_list.querySelectorAll('.assistant').forEach( (el) => {
         const playback_icon = el.children[0].children[0];
-        el.addEventListener("mouseenter", () => {
-            playback_icon.classList = "fa-play fa-solid";
-            playback_icon.innerHTML = "";
-        });
-
-        el.addEventListener("mouseleave", () => {
-            playback_icon.classList = "gpt user-icon";
-            playback_icon.innerHTML = "G";
-        });
 
         el.addEventListener("click", () => {
             audio_queue.play_audio(id);
@@ -515,6 +503,8 @@ const startRecordButton = document.getElementById('recordButton');
 const stopRecordButton = document.getElementById('stopButton');
 
 startRecordButton.addEventListener('click', function() {
+    startRecordButton.style.display = "none";
+    stopRecordButton.style.display = "block";
     navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
             mediaRecorder = new MediaRecorder(stream);
@@ -528,6 +518,8 @@ startRecordButton.addEventListener('click', function() {
 });
 
 stopRecordButton.addEventListener('click', function() {
+    startRecordButton.style.display = "block";
+    stopRecordButton.style.display = "none";
     mediaRecorder.stop();
 
     next_id++;
@@ -563,6 +555,7 @@ async function add_audio(blob) {
         return response.json();
     } ).then( (data) => {
         console.log(data);
+        message_input.value = data['text'];
         add_message("user", data['text']);
         send_message();
     });

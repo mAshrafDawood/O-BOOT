@@ -140,13 +140,15 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
         </div>
 
         <div id="message-form">
-            <div class="message-wrapper">
-                <textarea id="message" rows="1" placeholder="Send a message"></textarea>
-                <button id="send-button"><i class="fa fa-paper-plane"></i></button>
-            </div>
-            <div class="record-container">
-                <button id="recordButton"><i class="fa-solid fa-microphone"></i>Start Recording</button>
-                <button id="stopButton"><i class="fa-solid fa-microphone-slash"></i>Stop Recording</button>
+            <div class="message-box-container">
+                <div class="message-wrapper">
+                    <textarea id="message" rows="1" placeholder="Send a message"></textarea>
+                    <button id="send-button"><i class="fa fa-paper-plane"></i></button>
+                </div>
+                <div class="record-container">
+                    <button id="recordButton"><i class="fa-solid fa-microphone"></i>Start Recording</button>
+                    <button id="stopButton"><i class="fa-solid fa-microphone-slash"></i>Stop Recording</button>
+                </div>
             </div>
             <div class="disclaimer">
                 مشغل بواسطة OI-Media

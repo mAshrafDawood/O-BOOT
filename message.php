@@ -24,13 +24,17 @@ if( ! $conversation ) {
 $context = $conversation->get_messages();
 
 if( empty( $context ) && ! empty( $settings['system_message'] ) ) {
-    $system_message = [
-        "role" => "system",
-        "content" => $settings['system_message'],
-    ];
-
-    $context[] = $system_message;
-    $conversation->add_message( $system_message );
+    $system_messages = $settings['system_message'];
+    foreach ($system_messages as $system_message) {
+        $context[] = [
+            "role" => "system",
+            "content" => $system_message,
+        ];
+        $conversation->add_message( [
+            "role" => "system",
+            "content" => $system_message,
+        ] );
+    }
 }
 
 if( isset( $_POST['message'] ) ) {

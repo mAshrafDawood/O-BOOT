@@ -461,8 +461,16 @@ p.secondary {
     box-shadow: var(--color-main) 0 0 50px;
 }
 
+.message-box-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+}
+
 .message-wrapper {
     position: relative;
+    width: 75%;
 }
 
 #message::placeholder {
@@ -580,12 +588,15 @@ pre code.hljs {
 }
 
 .record-container {
-    display: flex;
-    justify-content: space-around;
+    
 }
 
 .record-container i{
     margin: 5px;
+}
+
+#stopButton {
+    display: none;
 }
 
 
