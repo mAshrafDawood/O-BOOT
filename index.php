@@ -37,7 +37,7 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <title>O-BOOT</title>
+    <title>O-BOT</title>
     <script>
         let base_uri = '<?php echo $base_uri; ?>';
         let chat_id = <?php echo intval($chat_id); ?>;
@@ -131,7 +131,7 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
             </div>
 
             <div class="logo o-boot">
-                (O-BOOT)
+                (O-BOT)
             </div>
 
             <!-- <div class="image-container">
