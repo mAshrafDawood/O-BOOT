@@ -146,8 +146,8 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
                     <button id="send-button"><i class="fa fa-paper-plane"></i></button>
                 </div>
                 <div class="record-container">
-                    <button id="recordButton"><i class="fa-solid fa-microphone"></i>Start Recording</button>
-                    <button id="stopButton"><i class="fa-solid fa-microphone-slash"></i>Stop Recording</button>
+                    <button id="recordButton"><i class="fa-solid fa-microphone"></i></button>
+                    <button id="stopButton"><i class="fa-solid fa-microphone-slash"></i></button>
                 </div>
             </div>
             <div class="disclaimer">

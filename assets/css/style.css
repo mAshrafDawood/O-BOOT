@@ -470,7 +470,7 @@ p.secondary {
 
 .message-wrapper {
     position: relative;
-    width: 75%;
+    width: 90%;
 }
 
 #message::placeholder {
@@ -585,14 +585,6 @@ pre code.hljs {
 
 .assistant-image{
     height: 25%;
-}
-
-.record-container {
-    
-}
-
-.record-container i{
-    margin: 5px;
 }
 
 #stopButton {
