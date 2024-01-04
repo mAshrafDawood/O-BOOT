@@ -46,7 +46,7 @@ if( ! file_exists($input_file) ) {
 
 $speech_script = $speech_dir . "/generate_text.py";
 
-$python_path = __DIR__ . "/venv/Scripts/python";
+$python_path = "python3";
 
 $settings = require( __DIR__ . "/settings.php" );
 

@@ -648,6 +648,9 @@ pre code.hljs {
         font-size: 0.5em;
     }
 }
+.message>.content{
+    font-size: 2em;
+}
 
 @media (max-width: 335px) {
     main {

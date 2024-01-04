@@ -34,7 +34,8 @@ client = openai.OpenAI(
 # (Replace this with actual Whisper API call)
 response = client.audio.transcriptions.create(
     model='whisper-1',
-    file=Path(input_file)
+    file=Path(input_file),
+    prompt="The language of this audio is arabic if not then it is english, it is very unlikely for it to be in any other language"
 )
 
 with open(output_file, 'w', encoding='utf-8') as f:
