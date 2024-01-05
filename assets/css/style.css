@@ -520,10 +520,6 @@ button#send-button:hover {
     color: var(--color-white);
 }
 
-p {
-    margin: 0 0 1.5em 0;
-}
-
 button.copy {
     border-radius: 5px;
     background: #fff;
@@ -588,6 +584,38 @@ pre code.hljs {
 }
 
 #stopButton {
+    display: none;
+}
+
+.message-container{
+    position: relative;
+    color : var(--color-text);
+    font-size: 2em;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.message-container>div{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.message-container p{
+    margin-left: 5%;
+    align-self: center;
+}
+
+#chat-window {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+#chat-window::-webkit-scrollbar{
     display: none;
 }
 

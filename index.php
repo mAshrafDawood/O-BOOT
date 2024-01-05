@@ -47,46 +47,6 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
 </head>
 
 <body>
-    <!-- <nav id="sidebar">
-        <div class="float-top">
-            <div class="sidebar-controls">
-                <button class="new-chat"><i class="fa fa-plus"></i> New chat</button>
-                <button class="hide-sidebar"><i class="fa fa-chevron-left"></i></button>
-            </div>
-            <ul class="conversations">
-                <?php
-                $chats = $conversation_class->get_chats($db);
-
-                foreach ($chats as $chat) {
-                    $id = $chat->get_id();
-                ?>
-                    <li class="">
-                        <button class="conversation-button" data-id="<?php echo htmlspecialchars($id); ?>"><i class="fa fa-message fa-regular"></i> <span class="title-text"><?php echo htmlspecialchars($chat->get_title()); ?></span></button>
-                        <div class="fade"></div>
-                        <div class="edit-buttons">
-                            <button><i class="fa fa-edit"></i></button>
-                            <button class="delete" data-id="<?php echo htmlspecialchars($id); ?>"><i class="fa fa-trash"></i></button>
-                        </div>
-                    </li>
-                    <?php
-                }
-                    ?>
-            </ul>
-        </div>
-        <div class="user-menu">
-            <button>
-                <i class="user-icon">u</i>
-                username
-                <i class="fa fa-ellipsis dots"></i>
-            </button>
-            <ul onclick="alert('Menu is dummy');">
-                <li><button>My plan</button></li>
-                <li><button>Custom instructions</button></li>
-                <li><button>Settings &amp; Beta</button></li>
-                <li><button>Log out</button></li>
-            </ul>
-        </div>
-    </nav> -->
     <main>
         <div class="view conversation-view <?php echo $chat_id ? "show" : ""; ?>" id="chat-messages">
             <div class="model-name">
@@ -139,6 +99,10 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
             </div> -->
         </div>
 
+        <div id="chat-window">
+
+        </div>
+
         <div id="message-form">
             <div class="message-box-container">
                 <div class="message-wrapper">
@@ -155,8 +119,7 @@ $speech_enabled = isset($settings['speech_enabled']) && $settings['speech_enable
             </div>
         </div>
     </main>
-    <script src="<?php echo $base_uri; ?>assets/js/script.js"></script>
-    <script src="<?php echo $base_uri; ?>assets/js/ui-script.js"></script>
+    <script src="<?php echo $base_uri; ?>assets/js/main.js"></script>
 </body>
 
 </html>
