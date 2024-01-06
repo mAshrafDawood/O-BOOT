@@ -50,9 +50,9 @@ $python_path = "python3";
 
 $settings = require( __DIR__ . "/settings.php" );
 
-// exec( $python_path . " " . escapeshellarg( $speech_script ) . " " . escapeshellarg( $input_file ) . " " . escapeshellarg( $output_file ) . " " . escapeshellarg( $settings['api_key'] ), $output, $result_code );
-
 exec( $python_path . " " . $speech_script . " " .$input_file . " " . $output_file . " " . $settings['api_key'], $output, $result_code );
+
+@unlink($input_file);
 
 
 if( ! file_exists( $output_file ) ) {

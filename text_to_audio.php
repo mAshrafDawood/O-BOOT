@@ -69,7 +69,8 @@ $python_path = "python3";
 
 exec( $python_path . " " . escapeshellarg( $speech_script ) . " " . escapeshellarg( $input_file ) . " " . escapeshellarg( $output_file ) . " " . escapeshellarg( $settings['elevenlabs_api_key'] ), $output, $result_code );
 
-// unlink( $input_file );
+
+unlink( $input_file );
 
 if( ! file_exists( $output_file ) ) {
     die( json_encode( [
