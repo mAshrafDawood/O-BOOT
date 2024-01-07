@@ -592,7 +592,7 @@ pre code.hljs {
     color : var(--color-text);
     font-size: 2em;
     width: 70%;
-    margin: 0 auto;
+    margin: 2.5% auto;
 }
 
 .message-container>div{
@@ -609,6 +609,7 @@ pre code.hljs {
 .message-container audio{
     margin-left: 5%;
     align-self: center;
+    width: 100%;
 }
 
 #chat-window {

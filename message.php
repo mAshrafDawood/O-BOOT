@@ -25,6 +25,7 @@ $context = $conversation->get_messages();
 
 if( empty( $context ) && ! empty( $settings['system_message'] ) ) {
     $system_messages = $settings['system_message'];
+
     foreach ($system_messages as $system_message) {
         $context[] = [
             "role" => "system",

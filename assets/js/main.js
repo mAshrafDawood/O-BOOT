@@ -11,7 +11,10 @@ const user_icon = document.createElement("i");
 user_icon.classList = "fa-solid fa-user";
 
 const bot_icon = document.createElement("i");
-bot_icon.classList = "fa-solid fa-play";
+bot_icon.classList = "fa-solid fa-robot";
+
+const play_icon = document.createElement("i");
+play_icon.classList = "fa-solid fa-play";
 
 function create_message_container(id) {
     let message_container = document.createElement("div");
@@ -20,12 +23,13 @@ function create_message_container(id) {
     return message_container;
 }
 
-function get_icon_for_message(from) {
+function get_icon_for_message(from, type) {
     switch (from) {
         case "user":
             return user_icon.cloneNode(true);
         case "bot":
-            return bot_icon.cloneNode(true);
+            if (type === "text") return bot_icon.cloneNode(true);
+            return play_icon.cloneNode(true);
         default:
             throw new TypeError(
                 "Invalid argument: " + from + '. Expected "user" or "bot".'
@@ -53,7 +57,7 @@ function create_message_element(value, type, message_id) {
 function create_message_inner_container(from, value, type, message_id) {
     let message_inner_container = document.createElement("div");
     try {
-        message_inner_container.appendChild(get_icon_for_message(from));
+        message_inner_container.appendChild(get_icon_for_message(from, type));
         message_inner_container.appendChild(create_message_element(value, type, message_id));
     } catch (TypeError) {
         return false;
@@ -126,12 +130,14 @@ async function send_text_message(value, message_id) {
 
     eventSource.addEventListener("stop", async function () {
         eventSource.close();
-        const audio_element = await link_audio_file(
-            message_id,
+        const audio_id = new_message(
+            'bot',
             await request_audio_file(
                 get_message_text(message_id)
-            )
+            ),
+            'audio'
         );
+        const audio_element = document.getElementById(`audio-id-${audio_id}`);
         audio_element.addEventListener("canplaythrough", () => {
             if (!isAnyAudioPlaying()) audio_element.play();
         });
@@ -261,7 +267,6 @@ async function stop_recording() {
     const result = await audio_recorder.stop();
     new_message("user", result.audioUrl, "audio");
     const text = await request_transcription(result.audioBlob);
-    link_audio_file(new_message("user", text, "text"), result.audioUrl);
     let message_id = new_message("bot", "", "text");
     send_text_message(text, message_id);
 }
