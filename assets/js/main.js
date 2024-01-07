@@ -5,6 +5,7 @@ const user_input_textarea_element = document.getElementById("message");
 const send_button = document.getElementById("send-button");
 const start_recording_button = document.getElementById('recordButton');
 const stop_recording_button = document.getElementById('stopButton');
+const submit_text_button = document.getElementById('send-button');
 
 const user_icon = document.createElement("i");
 user_icon.classList = "fa-solid fa-user";
@@ -64,7 +65,7 @@ function create_message_inner_container(from, value, type, message_id) {
 function new_message(from, value, type) {
     next_message_id++;
 
-    message_container = create_message_container(next_message_id);
+    let message_container = create_message_container(next_message_id);
     let message_inner_container = create_message_inner_container(
         from,
         value,
@@ -92,6 +93,11 @@ function update_message(new_value, message_id) {
     let message_container = document.getElementById("message-id-" + message_id);
     let message_paragraph_element = message_container.firstChild.lastChild;
     message_paragraph_element.innerText += new_value;
+    message_container.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+    });
 }
 
 async function send_text_message(value, message_id) {
@@ -141,9 +147,15 @@ function user_input() {
 
 user_input_textarea_element.addEventListener("keypress", (event) => {
     if (event.key == "Enter") {
+        event.preventDefault();
         user_input();
         user_input_textarea_element.value = "";
     }
+});
+
+submit_text_button.addEventListener("click", () => {
+    user_input();
+    user_input_textarea_element.value = "";
 });
 
 function isAnyAudioPlaying() {
@@ -247,6 +259,7 @@ async function stop_recording() {
     stop_recording_button.style.display = 'none';
 
     const result = await audio_recorder.stop();
+    new_message("user", result.audioUrl, "audio");
     const text = await request_transcription(result.audioBlob);
     link_audio_file(new_message("user", text, "text"), result.audioUrl);
     let message_id = new_message("bot", "", "text");

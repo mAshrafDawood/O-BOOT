@@ -606,6 +606,11 @@ pre code.hljs {
     align-self: center;
 }
 
+.message-container audio{
+    margin-left: 5%;
+    align-self: center;
+}
+
 #chat-window {
     height: 100%;
     width: 100%;
