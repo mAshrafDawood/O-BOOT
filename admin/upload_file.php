@@ -18,8 +18,30 @@ $file_contents = file_get_contents($_FILES['file']['tmp_name']);
 $encoding = mb_detect_encoding($file_contents, 'UTF-8, ISO-8859-1', true);
 $file_contents = mb_convert_encoding($file_contents, 'UTF-8', $encoding);
 $json = json_decode($file_contents, true);
-if($json === null) {
-    die(json_encode(['This file format is not json']));
+$allowed = true;
+$counter = 0;
+if (!is_null($json)){
+    foreach ($json as $key => $value) {
+        if ($key != $counter) {
+            $allowed = false;
+            break;
+        }
+        if (!is_string($value)) {
+            $allowed = false;
+            break;
+        }
+        $counter++;
+    }
+} else {
+    $allowed = false;
+}
+
+if(!$allowed) {
+    header('HTTP/1.1 400 Bad Request');
+    die(json_encode([
+        "status" => "ERROR",
+        "response" => "Input file must be a valid json in a specific format",
+    ]));
 }
 
 $upload_file = __DIR__ . "/../settings/gpt_identity.json";
@@ -38,7 +60,12 @@ if (! file_exists($upload_file)) {
     ] ) );
 }
 
+ini_set('session.gc_max_lifetime', 0);
+ini_set('session.gc_probability', 1);
+ini_set('session.gc_divisor', 1);
+
 die(json_encode([
+    'status' => "SUCCESS",
     'text' => $json
 ]));
 

@@ -9,3 +9,5 @@ venv
 .vscode
 /settings
 test.json
+/.idea
+*.json
