@@ -681,9 +681,10 @@ pre code.hljs {
     .disclaimer {
         font-size: 0.5em;
     }
-}
-.message>.content{
-    font-size: 2em;
+
+    .message-container {
+        font-size: 1em;
+    }
 }
 
 @media (max-width: 335px) {
